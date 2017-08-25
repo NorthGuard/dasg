@@ -20,8 +20,8 @@ the_dasg = DirectedAcyclicSequenceGraph(the_sequences)
 related_sequences = the_dasg.edit_distance_search(query_sequence=query, max_cost=2, sort=True)
 ```
 
-
-![DASG build on words: chill, fill, mill and pill][dasg]
+### Visual Example
+<img src="https://github.com/North-Guard/dasg/blob/master/dasg.png" width="300">
 
 
 ### Comparison with `editdistance`
@@ -66,5 +66,3 @@ Words closest to 'chill':
 
 Querying of set and editdistance: 18.4s
 ```
-
-[dasg]: https://github.com/North-Guard/dasg/blob/master/dasg.png "DASG Example."
