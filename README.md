@@ -21,7 +21,7 @@ related_sequences = the_dasg.edit_distance_search(query_sequence=query, max_cost
 ```
 
 
-![DASG build on words [chill, fill, mill, pill]][dasg]
+![DASG build on words: chill, fill, mill and pill][dasg]
 
 
 ### Comparison with `editdistance`
@@ -67,3 +67,4 @@ Words closest to 'chill':
 Querying of set and editdistance: 18.4s
 ```
 
+[dasg]: https://github.com/North-Guard/dasg/blob/master/dasg.png "DASG Example."
