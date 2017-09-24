@@ -181,15 +181,15 @@ class DirectedAcyclicSequenceGraph:
         if verbose:
             print(f"Creating {type(self).__name__}...")
 
+        # Type
+        self._sequence_type = type(sequences[0])
+        
         # Check if hashable
         if not isinstance(sequences[0], Hashable):
             sequences = [tuple(val) for val in sequences]
 
         # Make sure sequences are list-type and sorted
         sequences = sorted(list(set(sequences)))
-
-        # Type
-        self._sequence_type = type(sequences[0])
 
         # Insert all sequences
         i = 0
