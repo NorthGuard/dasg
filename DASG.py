@@ -1,6 +1,6 @@
 from pathlib import Path
 from time import time
-from typing import List
+from typing import List, Hashable
 
 
 class _DirectedAcyclicSequenceGraphNode:
@@ -181,6 +181,10 @@ class DirectedAcyclicSequenceGraph:
         if verbose:
             print(f"Creating {type(self).__name__}...")
 
+        # Check if hashable
+        if not isinstance(sequences[0], Hashable):
+            sequences = [tuple(val) for val in sequences]
+
         # Make sure sequences are list-type and sorted
         sequences = sorted(list(set(sequences)))
 
@@ -279,8 +283,8 @@ class DirectedAcyclicSequenceGraph:
     def _convert_output(self, current_elements):
         if self._sequence_type == str:
             return "".join(current_elements)
-        elif self._sequence_type == list and isinstance(current_elements, list):
-            return current_elements
+        elif self._sequence_type == list or self._sequence_type == tuple:
+            return self._sequence_type(current_elements)
         else:
             NotImplementedError(f"Conversion from output type {type(current_elements).__name__} to "
                                 f"{self._sequence_type} not implemented.")
