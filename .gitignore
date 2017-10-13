@@ -2,3 +2,6 @@
 /large_text.txt
 /comparison_script.py
 /__pycache__/**
+
+/dasg_comp_module/__pycache__/**
+/dasg_module/__pycache__/**
