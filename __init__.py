@@ -1,1 +1,2 @@
-from dasg.DASG import DirectedAcyclicSequenceGraph
+from dasg.dasg_module import DirectedAcyclicSequenceGraph
+from dasg.dasg_comp_module import DirectedAcyclicCompressedSequenceGraph

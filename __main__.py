@@ -1,6 +1,8 @@
+from collections import Counter
 from pathlib import Path
 
 from dasg import DirectedAcyclicSequenceGraph
+import dasg
 
 
 line = "-" * 75
@@ -33,11 +35,17 @@ for sequence in the_dasg:
 print("\n\n" + line)
 print("Analysing text-file.\n")
 
+# Get module path
+module_dir = Path(dasg.__file__).parent
+
 # Get test-text
-text = "\n".join([line for line in Path("text.txt").open("r")])
+text = "\n".join([line for line in Path(module_dir, "text.txt").open("r")])
 
 # Words and query
 all_words = text.split()
+word_frequencies = Counter()
+for word in all_words:
+    word_frequencies[word] += 1
 query = "pass"
 
 # Make DASG
@@ -59,3 +67,5 @@ else:
 query = "chill"
 print(f"\nWords closest to '{query}':")
 print(the_dasg.edit_distance_search(query_sequence=query, max_cost=2, sort=True))
+
+

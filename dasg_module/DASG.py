@@ -1,4 +1,3 @@
-from pathlib import Path
 from time import time
 from typing import List, Hashable
 
@@ -38,8 +37,17 @@ class _DirectedAcyclicSequenceGraphNode:
 
         return edge_string, id_string, status_string
 
+    def __str__(self):
+        return f"DASGNode(children={len(self.children)}"
+
+    def __repr__(self):
+        return str(self)
+
     def __hash__(self):
         return self.subtree_identity().__hash__()
+
+    def __lt__(self, other):
+        return hash(self) < hash(other)
 
     def __eq__(self, other):
         return self.subtree_identity() == other.subtree_identity()
@@ -183,7 +191,7 @@ class DirectedAcyclicSequenceGraph:
 
         # Type
         self._sequence_type = type(sequences[0])
-        
+
         # Check if hashable
         if not isinstance(sequences[0], Hashable):
             sequences = [tuple(val) for val in sequences]
@@ -194,11 +202,12 @@ class DirectedAcyclicSequenceGraph:
         # Insert all sequences
         i = 0
         start = time()
-        for sequence in sequences:
+        for nr, sequence in enumerate(sequences):
             i += 1
             self._insert(sequence)
 
         self._finish()
+
         if verbose:
             print(
                 f"Creation of {type(self).__name__} with {self._sequence_count} sequences "
@@ -274,8 +283,52 @@ class DirectedAcyclicSequenceGraph:
                 # Replace child with minimized node
                 parent.children[element] = self._nodes[child]
             else:
-                # Add chile to minimized nodes for later usage
+                # Add child to minimized nodes for later usage
                 self._nodes[child] = child
+
+    #########
+    # Entropy
+
+    # TODO: MAy not make sense. Do it with a tree.
+
+    # def entropy(self, word_frequencies):
+    #     # Find all nodes in order from root
+    #     queue = Queue()
+    #     queue.put((0, self._root))
+    #     node_order = PriorityQueue()
+    #     while not queue.empty():
+    #         depth, node = queue.get()
+    #         node_order.put((depth, node))
+    #
+    #         if node.children:
+    #             for child in node.children.values():
+    #                 queue.put((depth-1, child))
+    #
+    #     while not node_order.empty():
+    #         node = node_order.get()
+    #         print(node)
+    #     return node_order.qsize()
+
+        # # Process all nodes from leaves and up
+        # frequencies = dict()
+        # while node_order:
+        #     depth, node = node_order.get()
+        #     print(depth, node)
+        #
+        #     # Check if leaf
+        #     if not node.children:
+        #         frequency = node.frequency
+        #         assert frequency is not None
+        #         frequencies[node] = frequency
+        #     else:
+        #         node_frequency = node.frequency if node.frequency is not None else 0
+        #         for child in node.children.values():
+        #             node_frequency += frequencies[child]
+        #         frequencies[node] = node_frequency
+
+        #
+        #
+        # return frequencies
 
     #########
     # Searching
